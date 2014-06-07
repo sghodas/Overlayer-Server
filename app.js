@@ -19,8 +19,8 @@ app.post(API_PREFIX + '/recognize', function(req, res) {
     exec('tesseract /tmp/test.png stdout', function(err, stdout, stderr) {
         console.log('err: ' + err + '\nstdout: ' + stdout + '\nstderr: ' + stderr);
         res.send(stdout);
-        var wordBoxes = util.getWordBoxes(stdout);
-        res.send(wordBoxes);
+        //var wordBoxes = util.getWordBoxes(stdout);
+        //res.send(wordBoxes);
     });
 });
 
