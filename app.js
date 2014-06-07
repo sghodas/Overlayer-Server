@@ -2,18 +2,21 @@
 var express = require('express');
 var logfmt = require('logfmt');
 var exec = require('child_process').exec;
+var fs = require('fs');
 
 //    Setup
+var API_PREFIX = '/api/v1';
 var PORT = Number(process.env.PORT || 5000);
 var app = express();
 app.use(logfmt.requestLogger());
-
-var child = exec('tesseract', function(err, stdout, stderr) {
-    console.log('stdout: ' + stdout + '\nstderr: ' + stderr + '\nerr: ' + err);
-});
+app.use(express.bodyParser());
 
 //    Routes
-app.get('/', function(req, res) {
+app.post(API_PREFIX + '/recognize', function(req, res) {
+    fs.writeFileSync('test.png', new Buffer(req.body.imageData, 'base64'));
+    exec('tesseract test.png test hocr', function(err, stdout, stderr) {
+        console.log('stdout: ' + stdout + '\nstderr: ' + stderr + '\nerr: ' + err);
+    });
     res.send('Hello, world!');
 });
 
