@@ -11,7 +11,7 @@ var API_PREFIX = '/api/v1';
 var PORT = Number(process.env.PORT || 5000);
 var app = express();
 app.use(logfmt.requestLogger());
-app.use(express.bodyParser());
+app.use(express.bodyParser({limit: '50mb'}));
 
 //    Routes
 app.post(API_PREFIX + '/recognize', function(req, res) {
