@@ -15,7 +15,6 @@ app.use(express.bodyParser());
 
 //    Routes
 app.post(API_PREFIX + '/recognize', function(req, res) {
-    console.log(req.body);
     fs.writeFileSync('test.png', new Buffer(req.body.imageData, 'base64'));
     exec('tesseract test.png test hocr', function(err, stdout, stderr) {
         var wordBoxes = util.getWordBoxes(fs.readFileSync(__dirname + '/test.hocr', 'utf8'));
