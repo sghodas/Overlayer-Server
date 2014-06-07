@@ -16,8 +16,9 @@ app.use(express.bodyParser({limit: '50mb'}));
 //    Routes
 app.post(API_PREFIX + '/recognize', function(req, res) {
     fs.writeFileSync('/tmp/test.png', new Buffer(req.body.imageData, 'base64'));
-    exec('tesseract /tmp/test.png stdout hocr', function(err, stdout, stderr) {
+    exec('tesseract /tmp/test.png stdout', function(err, stdout, stderr) {
         console.log('err: ' + err + '\nstdout: ' + stdout + '\nstderr: ' + stderr);
+        res.send(stdout);
         var wordBoxes = util.getWordBoxes(stdout);
         res.send(wordBoxes);
     });
