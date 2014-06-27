@@ -3,6 +3,7 @@ var express = require('express');
 var logfmt = require('logfmt');
 var exec = require('child_process').exec;
 var fs = require('fs');
+var timeout = require('connect-timeout');
 
 var util = require('./util');
 
@@ -10,6 +11,7 @@ var util = require('./util');
 var API_PREFIX = '/api/v1';
 var PORT = Number(process.env.PORT || 5000);
 var app = express();
+app.use(timeout(120000));
 app.use(logfmt.requestLogger());
 app.use(express.bodyParser({limit: '50mb'}));
 
